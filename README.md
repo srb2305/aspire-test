@@ -44,9 +44,7 @@ laravel/passport (For api security purpose)
 
 ## APIs security changes on POSTMAN
 
-1) From postman change 
-
-Headers/Accept => application/json
+1) From postman change : Headers/Accept => application/json
 
 2) After register/login api, you will get a token on responce, For all other apis call you need to pass Bearer Token.
 
@@ -59,15 +57,18 @@ https://www.getpostman.com/collections/a00bff8d83e924968bc5
 1) Register new customer:
 
 http://127.0.0.1:8000/api/register
+
 POST [name,email,password,password_confirmation]
 
 user's default role will be 'CUSTOMER' for admin role pls change any 1 user role to 'ADMIN' from database. 
+
 
 2) Login customer/admin:
 
 http://127.0.0.1:8000/api/login
 
 POST [email,password]
+
 
 3) Customer create a loan:
 
@@ -77,6 +78,7 @@ POST [amount,term]
 
 Please send Customer Bearer Token with this api
 
+
 4) Admin approve the loan:
 
 http://127.0.0.1:8000/api/loan_approve
@@ -85,6 +87,7 @@ POST [loan_id]
 
 Please send Admin Bearer Token with this api
 
+
 5) Customer can view loan belong to him:
 
 http://127.0.0.1:8000/api/loan_details
@@ -92,6 +95,7 @@ http://127.0.0.1:8000/api/loan_details
 POST [loan_id] 
 
 Please send Customer Bearer Token with this api
+
 
 6) Customer add a repayments:
 
