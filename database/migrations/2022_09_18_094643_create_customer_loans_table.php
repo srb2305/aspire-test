@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('customer_loans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('role')->default('CUSTOMER')->comment('ADMIN,CUSTOMER');
-            $table->rememberToken();
+            $table->integer('loan_id')->unique();
+            $table->integer('user_id');
+            $table->float('loan_amout',8, 2)->nullable();
+            $table->float('loan_pending_amout',8, 2)->nullable();
+            $table->integer('term')->nullable();
+            $table->string('state')->default('PENDING')->comment('PENDING,APPROVED');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('customer_loans');
     }
 };

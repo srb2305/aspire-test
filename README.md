@@ -1,64 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Code developed by: Saurabh Sahu
+Email : web.saurabhsahu@gmail.com
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Dependencies what i used
+laravel/passport (For api security purpose)
 
-## About Laravel
+## My Steps for complete this project
+-setup laravel project to local
+-setup .env file
+-composer require laravel/passport
+-php artisan migrate
+-php artisan passport:install
+-update App/Providers/AuthServiceProvider
+-update config/auth (for passport driver)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-php artisan make:controller Auth/UserAuthController (for register/login customer)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-php artisan make:model CustomerLoan -m
+-php artisan make:model ScheduledRepayment -m
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-php artisan make:resource LoanResource
+-php artisan make:controller LoanController
 
-## Learning Laravel
+-updated/created migration files
+-php artisan migrate
+-create routes (routes/api)
+-Created Traits/CommonTrait for code reuse.
+-php artisan serve (http://127.0.0.1:8000)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## APIs security changes on POSTMAN
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1) From postman change 
+Headers/Accept => application/json
 
-## Laravel Sponsors
+2) After register/login api, you will get a token on responce, For all other apis call you need to pass Bearer Token.
+click on the authorization tab in Postman, select Bearer Token on the Type dropdown list, and paste your token inside the Token field.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## POSTMAN Collection Link:
+https://www.getpostman.com/collections/a00bff8d83e924968bc5
 
-### Premium Partners
+## REST APIs Details
+1) Register new customer:
+http://127.0.0.1:8000/api/register
+POST [name,email,password,password_confirmation]
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+user's default role will be 'CUSTOMER' for admin role pls change any 1 user role to 'ADMIN' from database. 
 
-## Contributing
+2) Login customer/admin:
+http://127.0.0.1:8000/api/login
+POST [email,password]
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3) Customer create a loan:
+http://127.0.0.1:8000/api/loan_request
+POST [amount,term]  
+Please send Customer Bearer Token with this api
 
-## Code of Conduct
+4) Admin approve the loan:
+http://127.0.0.1:8000/api/loan_approve
+POST [loan_id]  
+Please send Admin Bearer Token with this api
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5) Customer can view loan belong to him:
+http://127.0.0.1:8000/api/loan_details
+POST [loan_id] 
+Please send Customer Bearer Token with this api
 
-## Security Vulnerabilities
+6) Customer add a repayments:
+http://127.0.0.1:8000/api/loan_repayment
+POST [loan_id, amount] 
+Please send Customer Bearer Token with this api
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Nice-to-have:
+1) Include brief documentation for the project: the choices you made and why
+- I used Laravel for this project because laravel is fully secure and best framework of PHP. 
+- I used Passport package for rest api security.
+- I used Traits for code reusability,standard code style, readable, easy to review & understand.
+- Added proper comments where needed.
+- Added proper validations and error message. 
 
-## License
+2) Script to install the app in one go (any tool)
+- Command Prompt, Composer, SQL
+php artisan serve
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3) Postman collection/openAPI document for the API 
+- https://www.getpostman.com/collections/a00bff8d83e924968bc5
+
+4) Clean application architecture / design patterns
+- Yes i used clear application architecture.
+
+
+## Developed by: Saurabh Sahu
+For any queries pls mail : web.saurabhsahu@gmail.com
