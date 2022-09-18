@@ -76,6 +76,7 @@ Please send Customer Bearer Token with this api
 - I used Traits for code reusability,standard code style, readable, easy to review & understand.
 - Added proper comments where needed.
 - Added proper validations and error message. 
+- Used proper migration
 
 2) Script to install the app in one go (any tool)
 - Command Prompt, Composer, SQL
